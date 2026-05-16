@@ -44,8 +44,8 @@ body::before {
   content: '';
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background-image:
-    linear-gradient(rgba(0,229,255,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,229,255,0.025) 1px, transparent 1px);
+    linear-gradient(rgba(0,229,255,0.025) 3px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,255,0.025) 3px, transparent 1px);
   background-size: 36px 36px;
 }
 
@@ -57,7 +57,7 @@ body::before {
 .app-header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 12px 18px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 3px, solid var(--border);
   background: rgba(6,8,16,0.92);
   backdrop-filter: blur(10px);
   flex-shrink: 0;
@@ -84,7 +84,7 @@ body::before {
 /* ── Sidebar ─────────────────────────────── */
 .sidebar {
   width: 220px; flex-shrink: 0;
-  border-right: 1px solid var(--border);
+  border-right: 3px solid var(--border);
   background: var(--bg);
   display: flex; flex-direction: column;
   overflow: hidden;
@@ -92,11 +92,11 @@ body::before {
 
 .sidebar-search {
   padding: 12px 12px 8px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 3px solid var(--border);
 }
 .sidebar-search input {
   width: 100%; background: var(--bg-input);
-  border: 1px solid var(--border); border-radius: var(--r);
+  border: 3px solid var(--border); border-radius: var(--r);
   color: var(--text); font-family: var(--font-mono); font-size: 0.72rem;
   padding: 7px 10px; outline: none;
   transition: border-color 0.15s;
