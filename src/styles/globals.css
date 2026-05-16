@@ -355,3 +355,32 @@ body::before {
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(123,63,174,0.25); border-radius: 2px; }
+
+/* ── AI Toggle in action bar ─────────────────── */
+.ai-toggle-btn {
+  background: linear-gradient(110deg, rgba(13,138,133,0.12), rgba(123,63,174,0.12));
+  border: 1.5px solid rgba(123,63,174,0.3);
+  color: var(--purple); font-weight: 700;
+  box-shadow: none;
+}
+.ai-toggle-btn:hover {
+  background: linear-gradient(110deg, rgba(13,138,133,0.2), rgba(123,63,174,0.2));
+  opacity: 1; box-shadow: 0 0 0 3px rgba(123,63,174,0.12);
+}
+.ai-toggle-active {
+  background: var(--grad) !important;
+  color: #fff !important; border-color: transparent !important;
+  box-shadow: 0 4px 14px rgba(123,63,174,0.35) !important;
+}
+
+.action-divider {
+  width: 1px; height: 24px; background: var(--border); flex-shrink: 0;
+}
+
+/* ── Header ghost buttons ────────────────────── */
+.btn-header-ghost {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff; box-shadow: none;
+}
+.btn-header-ghost:hover { background: rgba(255,255,255,0.25); opacity: 1; box-shadow: none; }
