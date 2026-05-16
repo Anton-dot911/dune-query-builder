@@ -55,9 +55,15 @@ export default function App() {
     const updated = saved.filter(q => q.id !== id); setSaved(updated); saveToDB(updated)
   }
 
+  function toggleAI() {
+    const next = !aiOpen
+    setAiOpen(next); setAiError('')
+    if (next) setTimeout(() => aiInputRef.current?.focus(), 80)
+  }
+
   async function generateSQL() {
     if (!aiPrompt.trim() || aiLoading) return
-    setAiLoading(true); setAiError(''); setAiExplain('')
+    setAiLoading(true); setAiError('')
     try {
       const res = await fetch('/.netlify/functions/sql-generate', {
         method: 'POST',
@@ -73,8 +79,6 @@ export default function App() {
       setAiError(e instanceof Error ? e.message : 'Помилка генерації')
     } finally { setAiLoading(false) }
   }
-
-  function toggleAI() { setAiOpen(v => !v); setAiError(''); setTimeout(() => aiInputRef.current?.focus(), 50) }
 
   const filtered = useMemo(() => {
     if (!search.trim()) return null
@@ -95,6 +99,8 @@ export default function App() {
 
   return (
     <div className="app">
+
+      {/* ── Header — compact, gradient ── */}
       <header className="app-header">
         <div className="logo">
           <div className="logo-icon">⛓️</div>
@@ -103,15 +109,14 @@ export default function App() {
             <p>Blockchain Analytics · AI SQL · Open in Dune</p>
           </div>
         </div>
+        {/* Header: only copy + dune on mobile */}
         <div className="header-actions">
-          <button className={`btn btn-sm ${aiOpen ? 'btn-ai-active' : 'btn-ai'}`} onClick={toggleAI}>
-            ✨ AI Generate
-          </button>
-          <button className="btn btn-sm" onClick={copySQL}>📋 Copy</button>
-          <button className="btn btn-sm" onClick={openDune}>↗ Dune</button>
+          <button className="btn btn-sm btn-header-ghost" onClick={copySQL}>📋</button>
+          <button className="btn btn-sm btn-header-ghost" onClick={openDune}>↗ Dune</button>
         </div>
       </header>
 
+      {/* ── AI Panel — slides in below header ── */}
       {aiOpen && (
         <div className="ai-panel">
           <div className="ai-panel-inner">
@@ -123,7 +128,7 @@ export default function App() {
                 value={aiPrompt}
                 onChange={e => setAiPrompt(e.target.value)}
                 onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); generateSQL() } }}
-                placeholder="Наприклад: топ 20 трейдерів Aerodrome на Base за 30 днів, виключити боти, відсортувати за об'ємом..."
+                placeholder="Наприклад: топ 20 трейдерів Aerodrome за 30 днів, об'єм більше $1000, виключити боти..."
                 rows={2}
                 disabled={aiLoading}
               />
@@ -137,7 +142,10 @@ export default function App() {
         </div>
       )}
 
+      {/* ── Main layout ── */}
       <div className="main">
+
+        {/* Sidebar */}
         <aside className="sidebar">
           <div className="sidebar-search">
             <input type="text" placeholder="🔍 Пошук запитів..." value={search} onChange={e => setSearch(e.target.value)} />
@@ -150,6 +158,7 @@ export default function App() {
                   <button key={q.id} className={`query-item ${activeId === q.id ? 'active' : ''}`}
                     onClick={() => { selectQuery(q); setSearch('') }}>{q.title}</button>
                 ))}
+                {!filtered.length && <div style={{ padding: '8px 14px', fontSize: '0.75rem', color: 'var(--text-muted)' }}>Нічого не знайдено</div>}
               </div>
             )}
             {!filtered && CATEGORIES.map(cat => (
@@ -166,7 +175,7 @@ export default function App() {
                 {saved.map(q => (
                   <div key={q.id} style={{ display: 'flex', alignItems: 'center' }}>
                     <button className={`query-item ${activeId === q.id ? 'active' : ''}`} style={{ flex: 1 }} onClick={() => selectQuery(q)}>{q.title}</button>
-                    <button onClick={() => deleteSaved(q.id)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '0 8px', fontSize: '0.75rem' }}>×</button>
+                    <button onClick={() => deleteSaved(q.id)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '0 10px', fontSize: '0.8rem' }}>×</button>
                   </div>
                 ))}
               </div>
@@ -174,10 +183,11 @@ export default function App() {
           </div>
         </aside>
 
+        {/* Editor */}
         <div className="editor-area">
           <div className="editor-meta">
             {aiExplain ? (
-              <><h2 style={{ color: 'var(--cyan)' }}>✨ AI Generated</h2><p>{aiExplain}</p></>
+              <><h2 style={{ background: 'var(--grad)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>✨ AI Generated</h2><p>{aiExplain}</p></>
             ) : currentMeta ? (
               <><h2>{currentMeta.title}</h2><p>{currentMeta.description}</p>
                 <div className="editor-tags">{currentMeta.tags.map(t => <span key={t} className="tag">#{t}</span>)}</div>
@@ -197,12 +207,20 @@ export default function App() {
               placeholder="-- Обери запит зліва або згенеруй через ✨ AI" />
           </div>
 
+          {/* ── Action bar — AI Generate тут, завжди видно ── */}
           <div className="action-bar">
-            <button className="btn" onClick={copySQL}>📋 Копіювати SQL</button>
-            <button className="btn" onClick={openDune}>↗ Відкрити в Dune</button>
-            <button className="btn btn-ghost" onClick={() => { setSaveName(currentMeta?.title || 'Мій запит'); setSaveDialog(true) }}>💾 Зберегти</button>
+            <button
+              className={`btn ai-toggle-btn ${aiOpen ? 'ai-toggle-active' : ''}`}
+              onClick={toggleAI}
+            >
+              ✨ {aiOpen ? 'Закрити AI' : 'AI Generate'}
+            </button>
+            <div className="action-divider" />
+            <button className="btn" onClick={copySQL}>📋 Копіювати</button>
+            <button className="btn" onClick={openDune}>↗ Dune</button>
+            <button className="btn btn-ghost" onClick={() => { setSaveName(currentMeta?.title || 'Мій запит'); setSaveDialog(true) }}>💾</button>
             <button className="btn btn-ghost btn-sm" onClick={() => { setSql('-- Новий запит\nSELECT\n\nFROM\n\nWHERE\n\nLIMIT 100'); setActiveId(''); setAiExplain('') }}>+ Новий</button>
-            <div className="action-info">{sql.split('\n').length} рядків · {sql.length} символів</div>
+            <div className="action-info">{sql.split('\n').length} рядків</div>
           </div>
         </div>
       </div>
