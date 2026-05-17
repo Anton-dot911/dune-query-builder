@@ -10,6 +10,7 @@
   --grad:       linear-gradient(110deg, #0D8A85 0%, #7B3FAE 100%);
 
   --bg:         #D0DBEE;
+  --bg-q:       #F8FADE;
   --bg-card:    #FFFFFF;
   --bg-el:      #D0DBEE;
   --bg-input:   #D0DBEE;
@@ -130,12 +131,12 @@ body::before {
 
 .query-item {
   display: block; width: 100%; text-align: left;
-  background: var(--bg-el); border: none; cursor: pointer;
+  background: var(--bg-q); border: 3px solid; cursor: pointer;
   padding: 7px 14px;
   font-family: var(--font-ui); font-size: 0.8rem; font-weight: 500;
   color: var(--text-dim); line-height: 1.3;
   transition: background 0.12s, color 0.12s;
-  border-left: 3px solid transparent;
+  border-left: 3px solid;
 }
 .query-item:hover { background: var(--bg-el); color: var(--text); }
 .query-item.active {
