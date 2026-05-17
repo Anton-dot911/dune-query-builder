@@ -131,7 +131,7 @@ body::before {
 
 .query-item {
   display: block; width: 100%; text-align: left;
-  background: var(--bg-q); border: 3px solid; cursor: pointer;
+  background: var(--bg-q); border-top: 1px solid; cursor: pointer;
   padding: 7px 14px;
   font-family: var(--font-ui); font-size: 0.8rem; font-weight: 500;
   color: var(--text-dim); line-height: 1.3;
