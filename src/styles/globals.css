@@ -10,10 +10,10 @@
   --grad:       linear-gradient(110deg, #0D8A85 0%, #7B3FAE 100%);
 
   --bg:         #EEF0F8;
-  --bg-card:    #DAC8B4;
+  --bg-card:    #FFFFFF;
   --bg-el:      #F4F6FC;
   --bg-input:   #F8F9FD;
-  --bg-code:    #DAC8B4;
+  --bg-code:    #F6F8FF;
 
   --teal:       #0D8A85;
   --purple:     #7B3FAE;
@@ -23,7 +23,7 @@
 
   --text:       #1A1C2E;
   --text-dim:   #5A6478;
-  --text-muted: #DAC8B4;
+  --text-muted: #9BA5B8;
 
   --border:     rgba(0,0,0,0.08);
   --border-act: rgba(13,138,133,0.35);
